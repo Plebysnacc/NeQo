@@ -44,7 +44,7 @@ export default function Home() {
   }, [url])
 
   return (
-    <div className={'w-full h-full flex justify-center items-center'}>
+    <div className={'grow w-full flex justify-center items-center'}>
       <Card className="w-1/2">
         <CardContent className={'flex gap-8 flex-wrap'}>
           <div className={' flex flex-col justify-evenly items-start gap-4 grow'}>
@@ -71,10 +71,13 @@ export default function Home() {
                 <Download/> Download
               </Button>
             </div>
-
           </div>
 
-          <canvas id={'qr-code-canvas'}/>
+          <canvas
+            id={'qr-code-canvas'}
+            className={'rounded-lg dark:border-muted-foreground dark:border-1'}
+          />
+
         </CardContent>
       </Card>
     </div>
