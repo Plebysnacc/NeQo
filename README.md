@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Welcome to NeQo
 
-## Getting Started
+## Intro
+### To What
+The *Ne*xt*Q*r-C*o*de Generator. An app I created while waiting for a mate and published because I can
 
-First, run the development server:
+### Why?
+I did want to try dockerizing something and needed a simple app for that, 
+making QR-Code generator seemed simple enough.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Will there be development
+I'll probably come back to this whenever I'm bored and add some features
+
+## How to Deploy
+Simply edit the port you need on in `docker-compose.yml' and run 
+```
+docker compose up -d
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Further Stuff
+### Can I use this??
+Im sure there are more sophisticated projects out there, but in practice this works
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Why is there still the default vercel logos
+I made this in around 4h when I was bored and did not yet have the time to think of a logo
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### I found a bug!?
+Open an issue, or write a fix yourself and open a PR. As this is more of an impulsive demo,
+I can't guarantee that I'll look into it.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Security
+Dependabot is activated and will notify me for dependency-vulnerabilities. Those will be updates ASAP
