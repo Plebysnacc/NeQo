@@ -45,12 +45,12 @@ export default function Home() {
 
   return (
     <div className={'grow w-full flex justify-center items-center'}>
-      <Card className="w-1/2">
+      <Card className="w-full m-2 md:w-1/2">
         <CardContent className={'flex gap-8 flex-wrap'}>
           <div className={' flex flex-col justify-evenly items-start gap-4 grow'}>
             <div className={'flex flex-col'}>
-              <CardTitle>Enter the URL</CardTitle>
-              <CardDescription>Enter the URL for the website you want as a QR-Code here</CardDescription>
+              <CardTitle>Enter TextL</CardTitle>
+              <CardDescription>Enter the text which should be encoded into the QR-Code</CardDescription>
             </div>
 
             <div className={'flex flex-col gap-2 w-full'}>
@@ -73,10 +73,13 @@ export default function Home() {
             </div>
           </div>
 
-          <canvas
-            id={'qr-code-canvas'}
-            className={'rounded-lg dark:border-muted-foreground dark:border-1'}
-          />
+          <div className="flex justify-center grow basis-48">
+            <canvas
+              id="qr-code-canvas"
+              className="rounded-lg dark:border-muted-foreground dark:border-1"
+            />
+          </div>
+
 
         </CardContent>
       </Card>
