@@ -6,16 +6,19 @@ The *Ne*xt*Q*r-C*o*de Generator. An app I created while waiting for a mate and p
 
 ### Why?
 I did want to try dockerizing something and needed a simple app for that, 
-making QR-Code generator seemed simple enough.
+creating a QR-Code generator seemed simple enough.
 
 ### Will there be development
 I'll probably come back to this whenever I'm bored and add some features
 
 ## How to Deploy
-Simply edit the port you need on in `docker-compose.yml' and run 
+Simply edit the port you want the app running on in your `docker-compose.yml' and run 
 ```
 docker compose up -d
 ```
+
+### Is there an image I can use in the compose directly?
+Nah, probably will not upload one to docker hub either, but never say never!
 
 ## Further Stuff
 ### Can I use this??
