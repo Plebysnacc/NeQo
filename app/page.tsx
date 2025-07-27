@@ -7,12 +7,15 @@ import QRCode from "qrcode";
 import {Button} from "@/components/ui/button";
 import {Download} from "lucide-react";
 
+const MAX_LENGTH = 1500;
+
 export default function Home() {
   const [url, setUrl] = useState("https://example.com/qr");
   const [image, setImage] = useState("");
 
   function handleURLChange(newUrl: string) {
-    if (newUrl !== "") setUrl(newUrl);
+    const shortenedUrl = newUrl.slice(0, MAX_LENGTH)
+    if (shortenedUrl !== "") setUrl(shortenedUrl);
   }
 
   async function handleDownload() {
@@ -26,12 +29,15 @@ export default function Home() {
 
   useEffect(() => {
     const createImage = async () => {
-      const dataUrl = await QRCode.toDataURL(url, {margin: 0})
+      const dataUrl = await QRCode.toDataURL(url, {
+        margin: 0,
+        errorCorrectionLevel: "medium"
+      });
       setImage(dataUrl);
       await QRCode.toCanvas(document.getElementById("qr-code-canvas"), url, {
-        width: 164,
-        margin: 0
-      })
+        margin: 0,
+        width: 164
+      });
     }
 
     void createImage()
@@ -39,7 +45,7 @@ export default function Home() {
 
   return (
     <div className={'w-full h-full flex justify-center items-center'}>
-      <Card className="min-w-fit">
+      <Card className="w-1/2">
         <CardContent className={'flex gap-8 flex-wrap'}>
           <div className={' flex flex-col justify-evenly items-start gap-4 grow'}>
             <div className={'flex flex-col'}>
@@ -48,11 +54,19 @@ export default function Home() {
             </div>
 
             <div className={'flex flex-col gap-2 w-full'}>
-              <Input
-                className={'w-full'}
-                placeholder={'https://example.com/qr'}
-                onChange={event => handleURLChange(event.target.value)}
-              />
+              <div>
+                <Input
+                  className={'w-full mb-1'}
+                  placeholder={'https://example.com/qr'}
+                  maxLength={MAX_LENGTH}
+                  onChange={event => handleURLChange(event.target.value)}
+                />
+
+                <p className={'text-muted-foreground w-full text-right text-xs'}>
+                  {url.length} / {MAX_LENGTH}
+                </p>
+              </div>
+
               <Button className={'w-full'} onClick={handleDownload}>
                 <Download/> Download
               </Button>
@@ -60,7 +74,7 @@ export default function Home() {
 
           </div>
 
-          <canvas id={'qr-code-canvas'} className={'rounded-2xl'}/>
+          <canvas id={'qr-code-canvas'}/>
         </CardContent>
       </Card>
     </div>
