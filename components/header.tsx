@@ -20,7 +20,7 @@ function ThemeSwitch() {
   return (
     <Button
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className={'flex items-center'}
+      className={'flex items-center w-[90px]'}
     >
       {theme === "light" ? (
         <><Sun/>Light</>
