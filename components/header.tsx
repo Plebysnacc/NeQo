@@ -23,9 +23,9 @@ function ThemeSwitch() {
       className={'flex items-center'}
     >
       {theme === "light" ? (
-        <><Sun/>Hell</>
+        <><Sun/>Light</>
       ) : (
-        <><Moon/>Dunkel</>
+        <><Moon/>Dark</>
       )}
     </Button>
   )

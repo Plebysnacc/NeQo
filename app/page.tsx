@@ -49,7 +49,7 @@ export default function Home() {
         <CardContent className={'flex gap-8 flex-wrap'}>
           <div className={' flex flex-col justify-evenly items-start gap-4 grow'}>
             <div className={'flex flex-col'}>
-              <CardTitle>Enter TextL</CardTitle>
+              <CardTitle>Enter Text</CardTitle>
               <CardDescription>Enter the text which should be encoded into the QR-Code</CardDescription>
             </div>
 
