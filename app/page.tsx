@@ -2,10 +2,9 @@
 
 import {Card, CardContent, CardDescription, CardTitle} from "@/components/ui/card";
 import React, {useEffect, useState} from "react";
-import {Input} from "@/components/ui/input";
 import QRCode from "qrcode";
-import {Button} from "@/components/ui/button";
-import {Download} from "lucide-react";
+import Canvas from "@/components/canvas";
+import UrlForm from "@/components/forms/url-form";
 
 const MAX_LENGTH = 120;
 
@@ -47,40 +46,16 @@ export default function Home() {
     <div className={'grow w-full flex justify-center items-center'}>
       <Card className="w-full m-2 md:w-1/2">
         <CardContent className={'flex gap-8 flex-wrap'}>
-          <div className={' flex flex-col justify-evenly items-start gap-4 grow'}>
-            <div className={'flex flex-col'}>
-              <CardTitle>Enter URL</CardTitle>
-              <CardDescription>Enter the url which should be encoded into the QR-Code</CardDescription>
-            </div>
+          <div className={' flex flex-col justify-evenly items-start grow'}>
+            <CardTitle>Enter URL</CardTitle>
+            <CardDescription className={'mb-4'}>
+              Enter the url which should be encoded into the QR-Code
+            </CardDescription>
 
-            <div className={'flex flex-col gap-2 w-full'}>
-              <div>
-                <Input
-                  className={'w-full mb-1'}
-                  placeholder={'https://example.com/qr'}
-                  maxLength={MAX_LENGTH}
-                  onChange={event => handleURLChange(event.target.value)}
-                />
-
-                <p className={'text-muted-foreground w-full text-right text-xs'}>
-                  {url.length} / {MAX_LENGTH}
-                </p>
-              </div>
-
-              <Button className={'w-full'} onClick={handleDownload}>
-                <Download/> Download
-              </Button>
-            </div>
+            <UrlForm handleURLChange={handleURLChange} url={url} handleDownload={handleDownload}/>
           </div>
 
-          <div className="flex justify-center grow basis-48">
-            <canvas
-              id="qr-code-canvas"
-              className="rounded-lg dark:border-muted-foreground dark:border-1"
-            />
-          </div>
-
-
+          <Canvas/>
         </CardContent>
       </Card>
     </div>
