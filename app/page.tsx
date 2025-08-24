@@ -7,7 +7,7 @@ import QRCode from "qrcode";
 import {Button} from "@/components/ui/button";
 import {Download} from "lucide-react";
 
-const MAX_LENGTH = 1500;
+const MAX_LENGTH = 120;
 
 export default function Home() {
   const [url, setUrl] = useState("https://example.com/qr");
@@ -49,8 +49,8 @@ export default function Home() {
         <CardContent className={'flex gap-8 flex-wrap'}>
           <div className={' flex flex-col justify-evenly items-start gap-4 grow'}>
             <div className={'flex flex-col'}>
-              <CardTitle>Enter Text</CardTitle>
-              <CardDescription>Enter the text which should be encoded into the QR-Code</CardDescription>
+              <CardTitle>Enter URL</CardTitle>
+              <CardDescription>Enter the url which should be encoded into the QR-Code</CardDescription>
             </div>
 
             <div className={'flex flex-col gap-2 w-full'}>
