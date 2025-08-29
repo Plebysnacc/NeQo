@@ -16,7 +16,7 @@ import BlueskyForm from "@/components/forms/bluesky-form";
 export default function Home() {
   const [qrImage, setQrImage] = useState("");
   const [qrCodeText, setQrCodeText] = useState(defaultURL);
-  const [mode, setMode] = useState<NeqoMode>("wifi");
+  const [mode, setMode] = useState<NeqoMode>("url");
 
   async function handleDownload() {
     const link = document.createElement('a');
