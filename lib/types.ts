@@ -1,4 +1,4 @@
-export type NeqoMode = "wifi" | "url"
+export type NeqoMode = "wifi" | "url" | "bluesky"
 
 export type WifiEncoding = "nopass" | "WEP" | "WPA" | "WPA2" | "WPA3"
 

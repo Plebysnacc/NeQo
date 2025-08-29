@@ -4,12 +4,13 @@ import {Card, CardContent} from "@/components/ui/card";
 import React, {useEffect, useState} from "react";
 import QRCode from "qrcode";
 import UrlForm from "@/components/forms/url-form";
-import {defaultURL, defaultWifiObject} from "@/lib/defaults";
+import {defaultBskyUser, defaultURL, defaultWifiObject} from "@/lib/defaults";
 import {NeqoMode} from "@/lib/types";
 import {cn, createQrCodeTextFromWifiObject} from "@/lib/utils";
 import WifiForm from "@/components/forms/wif-form";
 import {Button} from "@/components/ui/button";
-import {Download, Link, Wifi} from "lucide-react";
+import {AtSign, Download, Link, Wifi} from "lucide-react";
+import BlueskyForm from "@/components/forms/bluesky-form";
 
 
 export default function Home() {
@@ -27,8 +28,20 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (mode === "wifi") setQrCodeText(createQrCodeTextFromWifiObject(defaultWifiObject));
-    else setQrCodeText(defaultURL)
+    switch (mode) {
+      case "url" : {
+        setQrCodeText(defaultURL);
+        return
+      }
+      case "wifi": {
+        setQrCodeText(createQrCodeTextFromWifiObject(defaultWifiObject));
+        return
+      }
+      case "bluesky": {
+        setQrCodeText(defaultBskyUser);
+        return
+      }
+    }
   }, [mode]);
 
   useEffect(() => {
@@ -68,11 +81,20 @@ export default function Home() {
               <Wifi/>
               WIFI
             </Button>
+            <Button
+              variant={'ghost'}
+              className={cn('rounded-none grow', mode === "bluesky" && 'bg-accent/50')}
+              onClick={() => setMode("bluesky")}
+            >
+              <AtSign/>
+              Bluesky
+            </Button>
           </div>
 
           <div className={'flex flex-col justify-evenly items-start grow gap-8'}>
             {mode === "url" && (<UrlForm setQrCodeText={setQrCodeText}/>)}
             {mode === "wifi" && (<WifiForm setQrCodeText={setQrCodeText}/>)}
+            {mode === "bluesky" && (<BlueskyForm setQrCodeText={setQrCodeText}/>)}
             <Button className={'w-full'} onClick={handleDownload}>
               <Download/> Download
             </Button>

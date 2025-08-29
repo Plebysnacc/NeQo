@@ -8,3 +8,5 @@ export const defaultWifiObject: WifiObject = {
   password: "",
   hidden: false,
 }
+
+export const defaultBskyUser = 'https://bsky.app/profile/bsky.app'
