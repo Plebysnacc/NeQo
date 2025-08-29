@@ -2,26 +2,29 @@
 
 import {Card, CardContent} from "@/components/ui/card";
 import React, {useEffect, useState} from "react";
-import QRCode from "qrcode";
 import UrlForm from "@/components/forms/url-form";
 import {defaultBskyUser, defaultURL, defaultWifiObject} from "@/lib/defaults";
-import {NeqoMode} from "@/lib/types";
-import {cn, createQrCodeTextFromWifiObject} from "@/lib/utils";
+import {CodeMode, NeqoMode} from "@/lib/types";
+import {createQrCodeTextFromWifiObject} from "@/lib/utils";
 import WifiForm from "@/components/forms/wif-form";
 import {Button} from "@/components/ui/button";
-import {AtSign, Download, Link, Wifi} from "lucide-react";
+import {Download} from "lucide-react";
 import BlueskyForm from "@/components/forms/bluesky-form";
+import ModeSelectorBar from "@/components/mode-selector-bar";
+import CodeModeSelectorBar from "@/components/code-mode-selector-bar";
+import {createDmc, createQRCode} from "@/lib/code-generation";
 
 
 export default function Home() {
   const [qrImage, setQrImage] = useState("");
-  const [qrCodeText, setQrCodeText] = useState(defaultURL);
+  const [qrText, setQrText] = useState(defaultURL);
   const [mode, setMode] = useState<NeqoMode>("url");
+  const [codeMode, setCodeMode] = useState<CodeMode>("qr");
 
   async function handleDownload() {
     const link = document.createElement('a');
     link.href = qrImage;
-    link.download = 'qr-code.png';
+    link.download = 'code-image.png';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -30,71 +33,54 @@ export default function Home() {
   useEffect(() => {
     switch (mode) {
       case "url" : {
-        setQrCodeText(defaultURL);
+        setQrText(defaultURL);
         return
       }
       case "wifi": {
-        setQrCodeText(createQrCodeTextFromWifiObject(defaultWifiObject));
+        setQrText(createQrCodeTextFromWifiObject(defaultWifiObject));
         return
       }
       case "bluesky": {
-        setQrCodeText(defaultBskyUser);
+        setQrText(defaultBskyUser);
         return
       }
     }
   }, [mode]);
 
   useEffect(() => {
-    const createImage = async () => {
-      const dataUrl = await QRCode.toDataURL(qrCodeText, {
-        margin: 0,
-        errorCorrectionLevel: "medium"
-      });
-      setQrImage(dataUrl);
-      await QRCode.toCanvas(document.getElementById("qr-code-canvas"), qrCodeText, {
-        margin: 0,
-        width: 164
-      });
+    const handleImageCreation = async () => {
+      const canvas = document.getElementById('qr-code-canvas')
+      switch (codeMode) {
+        case "qr": {
+          const newQrImage = await createQRCode(qrText, canvas)
+          if (newQrImage) setQrImage(newQrImage);
+          return
+        }
+        case "dmc": {
+          const newDmcImage = await createDmc(qrText, canvas as HTMLCanvasElement);
+          if (newDmcImage) setQrImage(newDmcImage.uri)
+          return
+        }
+      }
     }
-    console.log("triggering rerender")
-    void createImage()
-  }, [qrCodeText])
+
+    void handleImageCreation();
+  }, [qrText, codeMode])
 
   return (
     <div className={'grow w-full flex justify-center items-center'}>
       <Card className="w-full m-2 md:w-1/2">
         <CardContent className={'flex gap-8 flex-wrap'}>
-          <div className={'w-full flex gap-0 border rounded-lg'}>
-            <Button
-              variant={'ghost'}
-              className={cn('rounded-none grow', mode === "url" && 'bg-accent/50')}
-              onClick={() => setMode("url")}
-            >
-              <Link/>
-              URL
-            </Button>
-            <Button
-              variant={'ghost'}
-              className={cn('rounded-none grow', mode === "wifi" && 'bg-accent/50')}
-              onClick={() => setMode("wifi")}
-            >
-              <Wifi/>
-              WIFI
-            </Button>
-            <Button
-              variant={'ghost'}
-              className={cn('rounded-none grow', mode === "bluesky" && 'bg-accent/50')}
-              onClick={() => setMode("bluesky")}
-            >
-              <AtSign/>
-              Bluesky
-            </Button>
+          <div className={'w-full flex flex-col gap-2'}>
+            <CodeModeSelectorBar codeMode={codeMode} setCodeMode={setCodeMode}/>
+            <ModeSelectorBar mode={mode} setMode={setMode}/>
           </div>
 
+
           <div className={'flex flex-col justify-evenly items-start grow gap-8'}>
-            {mode === "url" && (<UrlForm setQrCodeText={setQrCodeText}/>)}
-            {mode === "wifi" && (<WifiForm setQrCodeText={setQrCodeText}/>)}
-            {mode === "bluesky" && (<BlueskyForm setQrCodeText={setQrCodeText}/>)}
+            {mode === "url" && (<UrlForm setQrCodeText={setQrText}/>)}
+            {mode === "wifi" && (<WifiForm setQrCodeText={setQrText}/>)}
+            {mode === "bluesky" && (<BlueskyForm setQrCodeText={setQrText}/>)}
             <Button className={'w-full'} onClick={handleDownload}>
               <Download/> Download
             </Button>
