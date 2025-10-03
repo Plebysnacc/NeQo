@@ -1,14 +1,11 @@
-import {CodeMode} from "@/lib/types";
 import React from "react";
 import {Button} from "@/components/ui/button";
 import {cn} from "@/lib/utils";
+import {useCodeMode} from "@/components/provider/code-mode-provider";
 
-interface CodeModeSelectorBarProps {
-  codeMode: CodeMode
-  setCodeMode: React.Dispatch<React.SetStateAction<CodeMode>>
-}
+export default function CodeModeSelectorBar() {
+  const {codeMode, setCodeMode} = useCodeMode()
 
-export default function CodeModeSelectorBar({codeMode, setCodeMode}: CodeModeSelectorBarProps) {
   return (
     <div className={'w-full flex gap-0 border rounded-lg'}>
       <Button

@@ -13,7 +13,7 @@ export default function UrlForm({setQrCodeText}: UrlFormProps) {
 
   useEffect(() => {
     setQrCodeText(url)
-  }, [url])
+  }, [url, setQrCodeText])
 
   return (
     <div className={'flex flex-wrap items-center gap-12 w-full'}>

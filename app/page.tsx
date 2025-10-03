@@ -4,7 +4,7 @@ import {Card, CardContent} from "@/components/ui/card";
 import React, {useEffect, useState} from "react";
 import UrlForm from "@/components/forms/url-form";
 import {defaultBskyUser, defaultURL, defaultWifiObject} from "@/lib/defaults";
-import {CodeMode, NeqoMode} from "@/lib/types";
+import {NeqoMode} from "@/lib/types";
 import {createQrCodeTextFromWifiObject} from "@/lib/utils";
 import WifiForm from "@/components/forms/wif-form";
 import {Button} from "@/components/ui/button";
@@ -13,13 +13,14 @@ import BlueskyForm from "@/components/forms/bluesky-form";
 import ModeSelectorBar from "@/components/mode-selector-bar";
 import CodeModeSelectorBar from "@/components/code-mode-selector-bar";
 import {createDmc, createQRCode} from "@/lib/code-generation";
+import {useCodeMode} from "@/components/provider/code-mode-provider";
 
 
 export default function Home() {
   const [qrImage, setQrImage] = useState("");
   const [qrText, setQrText] = useState(defaultURL);
   const [mode, setMode] = useState<NeqoMode>("url");
-  const [codeMode, setCodeMode] = useState<CodeMode>("qr");
+  const {codeMode} = useCodeMode();
 
   async function handleDownload() {
     const link = document.createElement('a');
@@ -72,7 +73,7 @@ export default function Home() {
       <Card className="w-full m-2 md:w-1/2">
         <CardContent className={'flex gap-8 flex-wrap'}>
           <div className={'w-full flex flex-col gap-2'}>
-            <CodeModeSelectorBar codeMode={codeMode} setCodeMode={setCodeMode}/>
+            <CodeModeSelectorBar/>
             <ModeSelectorBar mode={mode} setMode={setMode}/>
           </div>
 

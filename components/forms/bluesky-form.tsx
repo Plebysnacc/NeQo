@@ -17,7 +17,7 @@ export default function BlueskyForm({setQrCodeText}: BlueskyFormProps) {
 
   useEffect(() => {
     setQrCodeText(blueskyPrefix + userHandle)
-  }, [userHandle])
+  }, [userHandle, setQrCodeText])
 
   return (
     <div className={'flex flex-wrap items-center gap-12 w-full'}>

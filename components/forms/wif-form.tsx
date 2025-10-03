@@ -16,7 +16,7 @@ export default function WifiForm({setQrCodeText}: WifiFormProps) {
 
   useEffect(() => {
     setQrCodeText(createQrCodeTextFromWifiObject(wifiObject));
-  }, [wifiObject.encoding, wifiObject.ssid, wifiObject.password, wifiObject.hidden])
+  }, [wifiObject, wifiObject.encoding, wifiObject.ssid, wifiObject.password, wifiObject.hidden, setQrCodeText])
 
   return (
     <div className={'flex flex-wrap items-center gap-12 w-full'}>
